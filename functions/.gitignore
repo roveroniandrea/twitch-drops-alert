@@ -1,0 +1,13 @@
+# Compiled JavaScript files
+lib/**/*.js
+lib/**/*.js.map
+
+# TypeScript v1 declaration files
+typings/
+
+# Node.js dependency directory
+node_modules/
+
+twitch-drops-alert-firebase-adminsdk-ipydo-fa15e7b9f6.json
+
+.env
