@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { TWITCH_ACCESS_TOKEN, TWITCH_CLIENT_ID } from '../config';
-import { Game } from '../types/game';
+import { TWITCH_ACCESS_TOKEN, TWITCH_CLIENT_ID } from '../../config';
+import { Game } from '../../types/game';
 
 const dropTagId = 'c2542d6d-cd10-4532-919b-3d19f30a768b';
 

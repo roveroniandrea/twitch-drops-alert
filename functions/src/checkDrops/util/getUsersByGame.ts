@@ -1,6 +1,6 @@
-import { firestore } from '../config';
-import { Game } from '../types/game';
-import { User } from '../types/user';
+import { firestore } from '../../config';
+import { Game } from '../../types/game';
+import { User } from '../../types/user';
 
 export const getUsersByGame = async function (game: Game) {
 	const users = await firestore.collection('users').where('games', 'array-contains', game.id).get();

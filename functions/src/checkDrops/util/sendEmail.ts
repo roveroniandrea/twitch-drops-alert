@@ -1,7 +1,7 @@
-import { Game } from '../types/game';
-import { User } from '../types/user';
+import { Game } from '../../types/game';
+import { User } from '../../types/user';
 import nodemailer = require('nodemailer');
-import { EMAIL_PASSWORD, EMAIL_USER } from '../config';
+import { EMAIL_PASSWORD, EMAIL_USER } from '../../config';
 import Mail = require('nodemailer/lib/mailer');
 
 const transporter = nodemailer.createTransport({
@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendEmail = function (game: Game, user: User, streams: string[]) {
-	console.log(`Spedisco mail a ${user.email}`);
 	const mailOptions: Mail.Options = {
 		from: `Twitch drops alert <${EMAIL_USER}>`,
 		to: user.email,
@@ -24,15 +23,13 @@ export const sendEmail = function (game: Game, user: User, streams: string[]) {
 
         <p>Ad esempio:</p>
         <ul>
-        ${streams.map((str) => `<li>https://www.twitch.tv/${str}</li>`)}
+        ${streams.map((str) => `<li>https://www.twitch.tv/${str}</li>`).join('')}
         </ul> `,
 	};
 
-	transporter.sendMail(mailOptions, (err, info) => {
+	transporter.sendMail(mailOptions, (err) => {
 		if (err) {
-			console.log('Error sendEmail', err);
-		} else {
-			console.log('Info', info);
+			throw err;
 		}
 	});
 };

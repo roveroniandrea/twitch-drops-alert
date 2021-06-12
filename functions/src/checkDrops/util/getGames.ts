@@ -1,5 +1,5 @@
-import { firestore } from '../config';
-import { Game } from '../types/game';
+import { firestore } from '../../config';
+import { Game } from '../../types/game';
 
 export const getGames = async function () {
 	const coll = await firestore.collection('games').get();
