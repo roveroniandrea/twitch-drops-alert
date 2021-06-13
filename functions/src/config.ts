@@ -15,10 +15,12 @@ export const TWITCH_CLIENT_SECRET = twitchAPI.TWITCH_CLIENT_SECRET;
 export const TWITCH_CLIENT_ID = twitchAPI.TWITCH_CLIENT_ID;
 export let TWITCH_ACCESS_TOKEN = '';
 
+/**Sets the twitch access token, retrieved when authenticating */
 export const setTwitchAccessToken = function (token: string) {
 	TWITCH_ACCESS_TOKEN = token;
 };
 
+//Initializez the firebase app with cloud environment or local (for testing)
 if (functions.config().firebase) {
 	admin.initializeApp();
 } else {

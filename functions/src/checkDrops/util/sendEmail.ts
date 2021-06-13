@@ -4,6 +4,7 @@ import nodemailer = require('nodemailer');
 import { EMAIL_PASSWORD, EMAIL_USER } from '../../config';
 import Mail = require('nodemailer/lib/mailer');
 
+/**Nodemailer transporter */
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -12,6 +13,7 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
+/**Sends an email to a user informing that there are streams with drops for a specific game */
 export const sendEmail = function (game: Game, user: User, streams: string[]) {
 	const mailOptions: Mail.Options = {
 		from: `Twitch drops alert <${EMAIL_USER}>`,

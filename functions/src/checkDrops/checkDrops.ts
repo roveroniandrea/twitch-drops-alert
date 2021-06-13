@@ -6,6 +6,7 @@ import { getUsersByGame } from './util/getUsersByGame';
 import { sendEmail } from './util/sendEmail';
 import functions = require('firebase-functions');
 
+/**For each game, finds streams with drops and notifies the users with an email */
 export const checkDrops = async function () {
 	const games = await getGames();
 
@@ -50,4 +51,5 @@ export const checkDrops = async function () {
 	}
 };
 
+/**See  `checkDrops` for info*/
 export const CF_checkDrops = functions.pubsub.schedule('every day 09:00').onRun(checkDrops);

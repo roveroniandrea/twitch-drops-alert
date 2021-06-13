@@ -2,8 +2,10 @@ import axios from 'axios';
 import { TWITCH_ACCESS_TOKEN, TWITCH_CLIENT_ID } from '../../config';
 import { Game } from '../../types/game';
 
+/** Id of the "drops enabled" tag on Twitch */
 const dropTagId = 'c2542d6d-cd10-4532-919b-3d19f30a768b';
 
+/**Returns all the active streams of a game with drops enabled */
 export const getStreamsWithDropsByGame = async function (game: Game) {
 	const streams: any[] = await axios
 		.get(`https://api.twitch.tv/helix/streams`, {
