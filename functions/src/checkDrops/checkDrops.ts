@@ -4,6 +4,7 @@ import { getGames } from './util/getGames';
 import { getStreamsWithDropsByGame } from './util/getStreamsWithDropsByGame';
 import { getUsersByGame } from './util/getUsersByGame';
 import { sendEmail } from './util/sendEmail';
+import functions = require('firebase-functions');
 
 export const checkDrops = async function () {
 	const games = await getGames();
@@ -48,3 +49,5 @@ export const checkDrops = async function () {
 		}
 	}
 };
+
+export const CF_checkDrops = functions.pubsub.schedule('every day 09:00').onRun(checkDrops);
