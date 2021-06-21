@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setTwitchAccessToken, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET } from '../config';
-import { getGames } from './util/getGames';
+import { getGames, setGameHasDrops } from './util/games';
 import { getStreamsWithDropsByGame } from './util/getStreamsWithDropsByGame';
 import { getUsersByGame } from './util/getUsersByGame';
 import { sendEmail } from './util/sendEmail';
@@ -34,7 +34,8 @@ export const checkDrops = async function () {
 		for (let game of games) {
 			try {
 				const streams = await getStreamsWithDropsByGame(game);
-				if (streams.length > 0) {
+				const gameHasDrops = streams.length > 0;
+				if (gameHasDrops && !game.dropsOnPreviousCheck) {
 					const subscribedUsers = await getUsersByGame(game);
 					for (let user of subscribedUsers) {
 						try {
@@ -44,6 +45,10 @@ export const checkDrops = async function () {
 						}
 					}
 				}
+				if (game.dropsOnPreviousCheck !== gameHasDrops) {
+					// No need to wait
+					setGameHasDrops(game.id, gameHasDrops);
+				}
 			} catch (err) {
 				console.log(`Error on game ${game.id}: `, err);
 			}
@@ -52,4 +57,4 @@ export const checkDrops = async function () {
 };
 
 /**See  `checkDrops` for info*/
-export const CF_checkDrops = functions.pubsub.schedule('every day 09:00').onRun(checkDrops);
+export const CF_checkDrops = functions.pubsub.schedule('every 60 minutes').onRun(checkDrops);
