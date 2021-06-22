@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setTwitchAccessToken, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET } from '../config';
-import { getGames, setGameHasDrops } from './util/games';
+import { getSlicedGames, setGameHasDrops } from './util/games';
 import { getStreamsWithDropsByGame } from './util/getStreamsWithDropsByGame';
 import { getUsersByGame } from './util/getUsersByGame';
 import { sendEmail } from './util/sendEmail';
@@ -8,7 +8,7 @@ import functions = require('firebase-functions');
 
 /**For each game, finds streams with drops and notifies the users with an email */
 export const checkDrops = async function () {
-	const games = await getGames();
+	const games = await getSlicedGames();
 
 	const access_token: string = await axios
 		.post(`https://id.twitch.tv/oauth2/token`, null, {
