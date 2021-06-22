@@ -5,6 +5,10 @@ import { getStreamsWithDropsByGame } from './util/getStreamsWithDropsByGame';
 import { getUsersByGame } from './util/getUsersByGame';
 import { sendEmail } from './util/sendEmail';
 import functions = require('firebase-functions');
+import { updateLastRun } from './util/updateLastRun';
+
+/**Sets the interval of every function call */
+const PUBSUB_RUN_EVERY_MINUTES = 60;
 
 /**For each game, finds streams with drops and notifies the users with an email */
 export const checkDrops = async function () {
@@ -53,8 +57,9 @@ export const checkDrops = async function () {
 				console.log(`Error on game ${game.id}: `, err);
 			}
 		}
+		updateLastRun(PUBSUB_RUN_EVERY_MINUTES);
 	}
 };
 
 /**See  `checkDrops` for info*/
-export const CF_checkDrops = functions.pubsub.schedule('every 60 minutes').onRun(checkDrops);
+export const CF_checkDrops = functions.pubsub.schedule(`every ${PUBSUB_RUN_EVERY_MINUTES} minutes`).onRun(checkDrops);
