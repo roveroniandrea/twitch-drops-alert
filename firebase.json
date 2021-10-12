@@ -7,7 +7,7 @@
     "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build"
   },
   "hosting": {
-    "public": "public",
+    "public": "client/dist/twitch-notifier",
     "ignore": [
       "firebase.json",
       "**/.*",
